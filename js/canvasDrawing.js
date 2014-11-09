@@ -13,7 +13,7 @@
       var canvas1, context1, texture1;
       var lighttt;
       var mouse3D2;
-      var ambientLight, ambientLight2; 
+      var ambientLight, ambientLight2;
 
 container = document.createElement('div');
 document.body.appendChild(container);
@@ -26,20 +26,20 @@ document.body.appendChild(container);
 ///////////////////////////////
 
 function init() {  // Sets up the scene.
-     
+
       scene = new THREE.Scene();
       var WIDTH = window.innerWidth,
           HEIGHT = window.innerHeight;
-        
+
         raycaster = new THREE.Raycaster();
         projector = new THREE.Projector();
-    
+
       // Create a renderer and add it to the DOM.
       renderer = new THREE.WebGLRenderer({antialias:true});
       renderer.setSize(WIDTH, HEIGHT);
       renderer.setClearColor(0x000000, 1);
       document.body.appendChild(renderer.domElement);
-   
+
 
         camera = new THREE.PerspectiveCamera( 45, WIDTH / HEIGHT, 1, 1200 );
 
@@ -53,7 +53,7 @@ function init() {  // Sets up the scene.
 
 
         var material = new THREE.MeshLambertMaterial( {ambient: 0xffffff, color: 0xCCCCCC, specular: 0xCCCCCC, shininess: 0.0} );
-      
+
 ambientLight2 = new THREE.AmbientLight( 0xFFFFCC );
 scene.add( ambientLight2 );
 
@@ -66,11 +66,14 @@ scene.add( ambientLight2 );
         mesh.rotation.x = 0;
         mesh.position.x = 10;
         mesh.position.y = 0;
-        mesh.position.z = -10;  
+        mesh.position.z = -10;
         mesh.scale.set( 10, 10, 10 );
         mesh.castShadow = true;
         mesh.receiveShadow = true;
         mesh.name = "townhouse";
+        mesh.subject = "The Squatter's House";
+        mesh.address = "234 S. Ashland Ave., Chicago, IL";
+        mesh.timeDate = "23 February 2023, 21:25hr";
         mesh.updateMatrix();
         meshObjects.push(mesh);
         console.log(mesh);
@@ -81,7 +84,7 @@ scene.add( ambientLight2 );
 
 
      var material2 = new THREE.MeshLambertMaterial( { ambient: 0xffffff, color: 0xCCCCCC, specular: 0xCCCCCC, shininess: 0.0} );
-      
+
 
         var loader = new THREE.JSONLoader();
         loader.load( "/models/police.js", function(geometry){
@@ -91,11 +94,14 @@ scene.add( ambientLight2 );
         mesh2.rotation.x = 0;
         mesh2.position.x = -20;
         mesh2.position.y = 0;
-        mesh2.position.z = -20;  
+        mesh2.position.z = -20;
         mesh2.scale.set( 5, 5,5 );
         mesh2.castShadow = true;
         mesh2.receiveShadow = true;
         mesh2.name = "police";
+        mesh2.subject = "The Des Plaines Police Station";
+        mesh2.address = "120 N. Des Plaines Ave., Chicago, IL";
+        mesh2.timeDate = "29 October 1893, 01:36hr";
         mesh2.updateMatrix();
         meshObjects.push(mesh2);
         console.log(mesh2);
@@ -105,7 +111,7 @@ scene.add( ambientLight2 );
 
 
      var material3 = new THREE.MeshPhongMaterial( { ambient: 0xffffff, color: 0xCCCCCC, specular: 0xCCCCCC, shininess: 0.0} );
-      
+
 
         var loader = new THREE.JSONLoader();
         loader.load( "/models/police.js", function(geometry){
@@ -115,11 +121,14 @@ scene.add( ambientLight2 );
         mesh3.rotation.x = 0;
         mesh3.position.x = -60;
         mesh3.position.y = 0;
-        mesh3.position.z = -40;  
+        mesh3.position.z = -40;
         mesh3.scale.set( 5, 5,5 );
         mesh3.castShadow = true;
         mesh3.receiveShadow = true;
         mesh3.name = "house";
+        mesh3.subject = "The Mayor's House";
+        mesh3.address = "231 S. Ashland Ave., Chicago, IL";
+        mesh3.timeDate = "28 October 1893, 20:00 hr";
         mesh3.updateMatrix();
         meshObjects.push(mesh3);
         console.log(mesh3);
@@ -133,22 +142,22 @@ scene.add( ambientLight2 );
 
   canvas1 = document.createElement('canvas');
   context1 = canvas1.getContext('2d');
-  context1.font = "Bold 14px Arial";
+  context1.font = "Bold 25px Calibri";
   context1.fillStyle = "rgba(0,0,0,0.95)";
   context1.fillText(message, 40, 20);
   // canvas contents will be used for a texture
-  texture1 = new THREE.Texture(canvas1) 
+  texture1 = new THREE.Texture(canvas1)
   texture1.needsUpdate = true;
-  
+
   var spriteMaterial = new THREE.SpriteMaterial( { map: texture1, useScreenCoordinates: true, alignment: THREE.SpriteAlignment.topLeft } );
-  
+
   sprite1 = new THREE.Sprite( spriteMaterial );
   sprite1.scale.set(200,100,1.0);
   sprite1.position.set( 50, 50, 0 );
- scene.add( sprite1 ); 
+ scene.add( sprite1 );
 
 document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-document.addEventListener( 'mousedown', onDocumentMouseDown, false );  
+document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 
   lighttt = new THREE.SpotLight( 0xffffff,3,100);
   lighttt.position.set( 0, 40, 0 );
@@ -156,13 +165,13 @@ document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 
 
        ambientLight = new THREE.AmbientLight( 0xCCCCCC);
-       
+
        ambientLight.position.set(0,100,100);
        scene.add( ambientLight);
       // console.log(ambientLight);
-  
+
     scene.add(lighttt);
-   
+
     // CONTROLS
 
     // window.controls = new THREE.PointerLockControls( camera );
@@ -175,7 +184,6 @@ document.addEventListener( 'mousedown', onDocumentMouseDown, false );
     window.controls = new THREE.FirstPersonControls( camera, $('canvas')[0] );
     window.controls.enabled = true
     window.controls.lookVertical = false
-
 
 }
 
@@ -208,13 +216,13 @@ function handleMoustEvent(event,action){
   var currentAction = action; // will be 'click' or 'hover'
 
   mouseX = ( event.clientX - windowHalfX ) * 2 - 1;
-  mouseY = ( event.clientY - windowHalfY ) * 2 + 1; 
+  mouseY = ( event.clientY - windowHalfY ) * 2 + 1;
 
 
 // mouseX = event.clientX;
 // mouseY = event.clientY;
  var mouse3D2 = new THREE.Vector3( ( event.clientX / window.innerWidth ) * 2 - 1,  -( event.clientY / window.innerHeight ) * 2 + 1, 0.5 );                                            //z
- 
+
   var raycaster = projector.pickingRay( mouse3D2.clone(), camera );
   var intersects = raycaster.intersectObjects( meshObjects );
 
@@ -224,8 +232,8 @@ function handleMoustEvent(event,action){
         for(var i=0; i<meshObjects.length;i++){
           // meshObjects[i].material.color.setHex(0xCCCCCC);
           // intersects[ 0 ].object.material.color.setHex( );
- 
-        }    
+
+        }
       }
   // Detect intersection
   if ( intersects.length > 0 ) {
@@ -235,27 +243,45 @@ function handleMoustEvent(event,action){
   if ( intersects[ 0 ].object.name ) {
     //console.log( intersects[ 0 ].object.name); /// which object did we intersect?
     if(currentAction == 'hover'){
-        context1.clearRect(0,0,640,480);        
-        var message = intersects[ 0 ].object.name;
-        var metrics = context1.measureText(message);
+
+        // Custom Test Code
+        var message2 = "Test";
+        var message3 = "Test2";
+        var lineHeight = 30;
+        var numberOfLines = 3;
+
+
+        context1.clearRect(0,0,640,480);
+        //var message = intersects[ 0 ].object.name;
+        var message = intersects[ 0 ].object.subject;
+        var message2 = intersects[ 0 ].object.address;
+        var message3 = intersects[ 0 ].object.timeDate;
+        var metrics = context1.measureText(message2);
         var width = metrics.width;
         context1.fillStyle = "rgba(0,0,0,0)"; // black border
-        context1.fillRect( 0,0, width+8,20+8);
+        context1.fillRect( 0,0, width+8, (lineHeight * numberOfLines) +8);
         context1.fillStyle = "rgba(0,0,0,0.95)"; // white filler
         context1.fillRect ( 2,10, width+4,20+4 );
         context1.fillStyle = "rgba(255,255,255,1)"; // text color
-        context1.fillText( message, 4,20 );
+        context1.fillText( message, 4, lineHeight );
+
+
+        // Custom Test Code
+        context1.fillText(message2, 14, (lineHeight * 2));
+        context1.fillText(message3, 14, (lineHeight * 3));
+
+
         texture1.needsUpdate = true;
       }
       else if(currentAction == 'click'){
           intersects[ 0 ].object.material.color.setHex(0xFF0000);
 
 
- 
+
       }
     }
    projector.unprojectVector( mouse3D2, camera );
-   mouse3D2.sub( camera.position);                
+   mouse3D2.sub( camera.position);
    mouse3D2.normalize();
    var raycaster = new THREE.Raycaster( camera.position, mouse3D2 );
    sprite1.position.set( event.clientX, event.clientY - 60, 60,10 );
@@ -272,7 +298,7 @@ function animate() {
     render();
     targetX = mouseX * .001;
     targetY = mouseY * .001;
-    
+
    //animate the light!
 
   lighttt.position.set (0,0,0);
@@ -283,7 +309,7 @@ function animate() {
 
   // camera.position.y += (mouseY - camera.position.y ) * -0.00000007;
 
-    } 
+    }
 
 
 function applyColor( geo, h, s, v ) {
@@ -295,8 +321,8 @@ function applyColor( geo, h, s, v ) {
         }
 }
 function render() {
-renderer.render( scene, camera); 
-    
+renderer.render( scene, camera);
+
    }
 
 function onWindowResize( event ) {
