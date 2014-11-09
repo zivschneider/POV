@@ -188,8 +188,22 @@ document.addEventListener( 'mousedown', onDocumentMouseDown, false );
     scene.add(plane);
 
 
+
+
+/////image planes of streets and background
+    var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
+        map:THREE.ImageUtils.loadTexture('img/front.jpg')
+    });
+    img.map.needsUpdate = true; //ADDED
+
+    // plane
+    var plane = new THREE.Mesh(new THREE.PlaneGeometry(200, 200),img);
+    plane.overdraw = true;
+    scene.add(plane);
+
+
     // window.controls = new THREE.FirstPersonControls( camera, $('canvas')[0] );
->>>>>>> Stashed changes
+
 
 }
 
@@ -243,7 +257,7 @@ function handleMoustEvent(event,action){
       }
   // Detect intersection
   if ( intersects.length > 0 ) {
-  // intersects[ 0 ].object.material.ambient.setHex(0xFFFF00);
+
  // intersects[ 0 ].object.material.color.setHex(0xCCCCCC);
 
   if ( intersects[ 0 ].object.name ) {
@@ -262,7 +276,7 @@ function handleMoustEvent(event,action){
         texture1.needsUpdate = true;
       }
       else if(currentAction == 'click'){
-          intersects[ 0 ].object.material.color.setHex(0xFF0000);
+  intersects[ 0 ].object.material.ambient.setHex(0xFF3300);
 
 
  
