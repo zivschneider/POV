@@ -70,7 +70,7 @@ scene.add( ambientLight2 );
         mesh.scale.set( 10, 10, 10 );
         mesh.castShadow = true;
         mesh.receiveShadow = true;
-        mesh.name = "townhouse";
+        mesh.name = "coldest";
         mesh.subject = "The Squatter's House";
         mesh.address = "234 S. Ashland Ave., Chicago, IL";
         mesh.timeDate = "23 February 2023, 21:25hr";
@@ -125,7 +125,7 @@ scene.add( ambientLight2 );
         mesh3.scale.set( 5, 5,5 );
         mesh3.castShadow = true;
         mesh3.receiveShadow = true;
-        mesh3.name = "house";
+        mesh3.name = "mayor";
         mesh3.subject = "The Mayor's House";
         mesh3.address = "231 S. Ashland Ave., Chicago, IL";
         mesh3.timeDate = "28 October 1893, 20:00 hr";
@@ -193,14 +193,19 @@ function onDocumentMouseDown( event ) {
   event.preventDefault();
   handleMoustEvent(event,'click');
 
+
+
+
+
+     var mayorVid = document.getElementById("coldest");
+     var coldestVid = document.getElementById("mayor");
+
 }
-
-
 
 function update (){
+
 }
 
-///move camera with mouseMove
 
 
 function onDocumentMouseMove(event) {
@@ -223,15 +228,15 @@ function handleMoustEvent(event,action){
 // mouseY = event.clientY;
  var mouse3D2 = new THREE.Vector3( ( event.clientX / window.innerWidth ) * 2 - 1,  -( event.clientY / window.innerHeight ) * 2 + 1, 0.5 );                                            //z
 
-  var raycaster = projector.pickingRay( mouse3D2.clone(), camera );
-  var intersects = raycaster.intersectObjects( meshObjects );
+ var raycaster = projector.pickingRay( mouse3D2.clone(), camera );
+ var intersects = raycaster.intersectObjects( meshObjects );
 
   // if not currently over an object
   if(!intersects.length) {
     // here we need to remove the rectangle (i.e. context1)
         for(var i=0; i<meshObjects.length;i++){
           meshObjects[i].material.ambient.setHex(0xCCCCCC);
-          // intersects[ 0 ].object.material.color.setHex( );
+
 
         }
       }
@@ -274,13 +279,14 @@ function handleMoustEvent(event,action){
         texture1.needsUpdate = true;
       }
       else if(currentAction == 'click'){
+
           intersects[ 0 ].object.material.ambient.setHex(0xFF0000);
-
-
+          setUpHtml(intersects[ 0 ].object.name);
 
 
       }
     }
+
    projector.unprojectVector( mouse3D2, camera );
    mouse3D2.sub( camera.position);
    mouse3D2.normalize();
@@ -313,14 +319,10 @@ function animate() {
     }
 
 
-
-
-
-
     function vidplay() {
 
-       var mayorvid = document.getElementById("coldest");
-       var coldestvid = document.getElementById("asom");
+       var mayorVid = document.getElementById("coldest");
+       var coldestVid = document.getElementById("mayor");
       
 
 }
