@@ -13,6 +13,7 @@
       var canvas1, context1, texture1;
       var lighttt;
       var mouse3D2;
+      var ambientLight, ambientLight2; 
 
 container = document.createElement('div');
 document.body.appendChild(container);
@@ -40,9 +41,6 @@ function init() {  // Sets up the scene.
       document.body.appendChild(renderer.domElement);
    
 
-ambientLight = new THREE.AmbientLight( 0x444444 );
-scene.add( ambientLight );
-
 
 
 
@@ -53,11 +51,6 @@ scene.add( ambientLight );
 
         window.controls = new THREE.PointerLockControls( camera );
 
-
-      // camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000);
-      // camera.position.set(0,0,100);
-      // scene.add(camera);
-
         window.addEventListener('resize', function() {
         var WIDTH = window.innerWidth,
         HEIGHT = window.innerHeight;
@@ -66,8 +59,10 @@ scene.add( ambientLight );
         camera.updateProjectionMatrix(); });
 
 
-        var material = new THREE.MeshPhongMaterial( { ambient: 0x000000, color: 0x000000, specular: 0xCCCCCC, shininess: 0.1} );
+        var material = new THREE.MeshPhongMaterial( { ambient: 0xffffff, color: 0x000000, specular: 0xCCCCCC, shininess: 0.0} );
       
+ambientLight2 = new THREE.AmbientLight( 0xFFFFCC );
+scene.add( ambientLight2 );
 
 
         var loader = new THREE.JSONLoader();
@@ -77,7 +72,7 @@ scene.add( ambientLight );
         mesh.rotation.y = 200;
         mesh.rotation.x = 0;
         mesh.position.x = 0;
-        mesh.position.y = 0;
+        mesh.position.y = -10;
         mesh.position.z = -10;  
         mesh.scale.set( 10, 10, 10 );
         mesh.castShadow = true;
@@ -92,7 +87,7 @@ scene.add( ambientLight );
 
 
 
-     var material2 = new THREE.MeshPhongMaterial( { ambient: 0x000000, color: 0x000000, specular: 0xCCCCCC, shininess: 0.1} );
+     var material2 = new THREE.MeshPhongMaterial( { ambient: 0xffffff, color: 0x000000, specular: 0xCCCCCC, shininess: 0.0} );
       
 
         var loader = new THREE.JSONLoader();
@@ -116,9 +111,31 @@ scene.add( ambientLight );
 
 
 
+     var material3 = new THREE.MeshPhongMaterial( { ambient: 0xffffff, color: 0x000000, specular: 0xCCCCCC, shininess: 0.0} );
+      
+
+        var loader = new THREE.JSONLoader();
+        loader.load( "/models/police.js", function(geometry){
+        mesh3 = new THREE.Mesh(geometry, material3);
+        scene.add(mesh3);
+        mesh3.rotation.y = 0;
+        mesh3.rotation.x = 0;
+        mesh3.position.x = -20;
+        mesh3.position.y = -10;
+        mesh3.position.z = -20;  
+        mesh3.scale.set( 5, 5,5 );
+        mesh3.castShadow = true;
+        mesh3.receiveShadow = true;
+        mesh3.name = "police";
+        mesh3.updateMatrix();
+        meshObjects.push(mesh3);
+        console.log(mesh3);
+      })
+
+
+
+
 ///change this one..
-
-
 
 
   canvas1 = document.createElement('canvas');
@@ -135,7 +152,7 @@ scene.add( ambientLight );
   sprite1 = new THREE.Sprite( spriteMaterial );
   sprite1.scale.set(200,100,1.0);
   sprite1.position.set( 50, 50, 0 );
-//  scene.add( sprite1 ); 
+ scene.add( sprite1 ); 
 
 document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 document.addEventListener( 'mousedown', onDocumentMouseDown, false );  
@@ -143,13 +160,15 @@ document.addEventListener( 'mousedown', onDocumentMouseDown, false );
   lighttt = new THREE.SpotLight( 0xffffff,3,100);
   lighttt.position.set( 0, 40, 0 );
   
-  // lighttt.angle = 45;
+   lighttt.angle = 45;
 
 
         ambientLight = new THREE.AmbientLight( 0x404040);
-        scene.add( ambientLight);
-     
-  scene.add(lighttt);
+       
+      //  ambientLight.position.set(0,0,0);
+      scene.add( ambientLight);
+      console.log(ambientLight);
+    scene.add(lighttt);
 
 
 }
@@ -162,41 +181,41 @@ function onDocumentMouseDown( event ) {
 
 }
 
-function generateGround( roadLength, groundWidth, offset, materialGround ) {
+// function generateGround( roadLength, groundWidth, offset, materialGround ) {
 
-        var groundHeight = 0.15;
+//         var groundHeight = 0.15;
 
-        var root = new THREE.Object3D();
+//         var root = new THREE.Object3D();
 
-        var sideGeo = new THREE.CubeGeometry( groundWidth, groundHeight, roadLength, 1, 1, 1, materialGround, { ny: false } );
-        applyColor( sideGeo, 0.3, 0.5, 0.3 );
+//         var sideGeo = new THREE.CubeGeometry( groundWidth, groundHeight, roadLength, 1, 1, 1, materialGround, { ny: false } );
+//         applyColor( sideGeo, 0.3, 0.5, 0.3 );
 
-        var meshRight = new THREE.Mesh( sideGeo, materialGround );
-        var meshLeft = new THREE.Mesh( sideGeo, materialGround );
+//         var meshRight = new THREE.Mesh( sideGeo, materialGround );
+//         var meshLeft = new THREE.Mesh( sideGeo, materialGround );
 
-        meshRight.position.x = offset;
-        meshLeft.position.x = - offset;
+//         meshRight.position.x = offset;
+//         meshLeft.position.x = - offset;
 
-        meshRight.position.y = groundHeight / 2;
-        meshLeft.position.y = groundHeight / 2;
+//         meshRight.position.y = groundHeight / 2;
+//         meshLeft.position.y = groundHeight / 2;
 
-        meshRight.receiveShadow = true;
-        meshLeft.receiveShadow = true;
+//         meshRight.receiveShadow = true;
+//         meshLeft.receiveShadow = true;
 
-        addStatic( root, meshRight );
-        addStatic( root, meshLeft );
+//         addStatic( root, meshRight );
+//         addStatic( root, meshLeft );
 
-        return root;
+//         return root;
 
-      }
-      function addStatic( parent, child ) {
+//       }
+//       function addStatic( parent, child ) {
 
-        child.matrixAutoUpdate = false;
-        child.updateMatrix();
+//         child.matrixAutoUpdate = false;
+//         child.updateMatrix();
 
-        parent.add( child );
+//         parent.add( child );
 
-      }
+//       }
 
 function update (){
 }
@@ -250,17 +269,19 @@ function handleMoustEvent(event,action){
         var message = intersects[ 0 ].object.name;
         var metrics = context1.measureText(message);
         var width = metrics.width;
-        // context1.fillStyle = "rgba(0,0,0,0)"; // black border
-        // context1.fillRect( 0,0, width+8,20+8);
-        // context1.fillStyle = "rgba(0,0,0,0.95)"; // white filler
-        // context1.fillRect ( 2,10, width+4,20+4 );
-        // context1.fillStyle = "rgba(255,255,255,1)"; // text color
-        // context1.fillText( message, 4,20 );
-        // texture1.needsUpdate = true;
+        context1.fillStyle = "rgba(0,0,0,0)"; // black border
+        context1.fillRect( 0,0, width+8,20+8);
+        context1.fillStyle = "rgba(0,0,0,0.95)"; // white filler
+        context1.fillRect ( 2,10, width+4,20+4 );
+        context1.fillStyle = "rgba(255,255,255,1)"; // text color
+        context1.fillText( message, 4,20 );
+        texture1.needsUpdate = true;
       }
       else if(currentAction == 'click'){
         //alert('the current person is ' + intersects[ 0 ].object.name);
-       setUpHtml(intersects[ 0 ].object.name);
+       // setUpHtml(intersects[ 0 ].object.name);
+          intersects[ 0 ].object.material.color.setHex(0xFF0000);
+
 
  
       }
@@ -276,23 +297,25 @@ function handleMoustEvent(event,action){
 
 function animate() {
     requestAnimationFrame(animate);
-    generateGround();
+    // generateGround();
     update();
     // stats.update();
     render();
     targetX = mouseX * .001;
     targetY = mouseY * .001;
     
-    var delta = clock.getDelta();
-    var r = clock.getElapsedTime();
+    // var delta = clock.getDelta();
+    // var r = clock.getElapsedTime();
    //animate the light!
 
   lighttt.position.set (0,0,0);
   lighttt.shadowCameraVisible = true;
   lighttt.angle = 45;
+
   lighttt.target.position.x = (mouseX - lighttt.position.x ) * 0.00019;
   lighttt.target.position.y = (mouseY - lighttt.position.y ) * 0.00019;
-  camera.position.y += (mouseY - camera.position.y ) * -0.00000007;
+
+  //camera.position.y += (mouseY - camera.position.y ) * -0.00000007;
 
     } 
 
