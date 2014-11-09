@@ -256,12 +256,14 @@ function handleMoustEvent(event,action){
         var message = intersects[ 0 ].object.subject;
         var message2 = intersects[ 0 ].object.address;
         var message3 = intersects[ 0 ].object.timeDate;
+
         var metrics = context1.measureText(message2);
         var width = metrics.width+15;
-        //context1.fillStyle = "rgba(0,0,0,0)"; // black border
+
+        //context1.fillStyle = "rgba(255,255,255,1)"; // white border
         //context1.fillRect( 0,0, width+88, (lineHeight * numberOfLines) +8);
         context1.fillStyle = "rgba(60,0,0,0.95)"; // white filler
-        context1.fillRect ( 2,10, width+8,(lineHeight * numberOfLines)+4 );
+        context1.fillRect ( 2,10, width+118, (lineHeight * numberOfLines)+4 );
         context1.fillStyle = "rgba(255,255,255,1)"; // text color
         context1.fillText( message, 14, lineHeight );
         // Custom Test Code
