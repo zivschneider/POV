@@ -83,10 +83,8 @@ THREE.FirstPersonControls = function ( object, domElement ) {
 
 		}
 
-    console.log( event )
-
-		event.preventDefault();
-		event.stopPropagation();
+		//event.preventDefault();
+		// event.stopPropagation();
 
 		this.mouseDragOn = true;
 

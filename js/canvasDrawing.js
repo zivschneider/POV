@@ -75,7 +75,7 @@ scene.add( ambientLight2 );
         mesh.receiveShadow = true;
         mesh.material.transparent = true;
         mesh.material.opacity = 0;
-        mesh.name = "townhouse";
+        mesh.name = "coldest";
         mesh.subject = "The Squatter's House";
         mesh.address = "234 S. Ashland Ave., Chicago, IL";
         mesh.timeDate = "23 February 2023, 21:25hr";
@@ -86,33 +86,31 @@ scene.add( ambientLight2 );
 
 
 
+     // var material2 = new THREE.MeshLambertMaterial( { ambient: 0xffffff, color: 0xCCCCCC, specular: 0xCCCCCC, shininess: 0.0} );
 
 
-     var material2 = new THREE.MeshLambertMaterial( { ambient: 0xffffff, color: 0xCCCCCC, specular: 0xCCCCCC, shininess: 0.0} );
-
-
-        var loader = new THREE.JSONLoader();
-        loader.load( "/models/police.js", function(geometry){
-        mesh2 = new THREE.Mesh(geometry, material2);
-        scene.add(mesh2);
-        mesh2.rotation.y = 0;
-        mesh2.rotation.x = 0;
-        mesh2.position.x = -20;
-        mesh2.position.y = 0;
-        mesh2.position.z = -20;
-        mesh2.scale.set( 5, 5,5 );
-        mesh2.castShadow = true;
-        mesh2.receiveShadow = true;
-        mesh2.material.transparent = true;
-        mesh2.name = "police";
-        mesh2.subject = "The Des Plaines Police Station";
-        mesh2.address = "120 N. Des Plaines Ave., Chicago, IL";
-        mesh2.timeDate = "29 October 1893, 01:36hr";
-        mesh2.timePeriod = "past";
-        mesh2.updateMatrix();
-        meshObjects.push(mesh2);
-        console.log(mesh2);
-      })
+     //    var loader = new THREE.JSONLoader();
+     //    loader.load( "/models/police.js", function(geometry){
+     //    mesh2 = new THREE.Mesh(geometry, material2);
+     //    scene.add(mesh2);
+     //    mesh2.rotation.y = 0;
+     //    mesh2.rotation.x = 0;
+     //    mesh2.position.x = -20;
+     //    mesh2.position.y = 0;
+     //    mesh2.position.z = -20;
+     //    mesh2.scale.set( 5, 5,5 );
+     //    mesh2.castShadow = true;
+     //    mesh2.receiveShadow = true;
+     //    mesh2.material.transparent = true;
+     //    mesh2.name = "police";
+     //    mesh2.subject = "The Des Plaines Police Station";
+     //    mesh2.address = "120 N. Des Plaines Ave., Chicago, IL";
+     //    mesh2.timeDate = "29 October 1893, 01:36hr";
+     //    mesh2.updateMatrix();
+     //    mesh2.timePeriod = "past";
+     //    meshObjects.push(mesh2);
+     //    console.log(mesh2);
+     //  })
 
 
 
@@ -133,7 +131,7 @@ scene.add( ambientLight2 );
         mesh3.castShadow = true;
         mesh3.receiveShadow = true;
         mesh3.material.transparent = true;
-        mesh3.name = "house";
+        mesh3.name = "mayor";
         mesh3.subject = "The Mayor's House";
         mesh3.address = "231 S. Ashland Ave., Chicago, IL";
         mesh3.timeDate = "28 October 1893, 20:00 hr";
@@ -243,14 +241,19 @@ function onDocumentMouseDown( event ) {
   event.preventDefault();
   handleMoustEvent(event,'click');
 
+
+
+
+
+     var mayorVid = document.getElementById("coldest");
+     var coldestVid = document.getElementById("mayor");
+
 }
-
-
 
 function update (){
+
 }
 
-///move camera with mouseMove
 
 
 function onDocumentMouseMove(event) {
@@ -273,15 +276,15 @@ function handleMoustEvent(event,action){
 // mouseY = event.clientY;
  var mouse3D2 = new THREE.Vector3( ( event.clientX / window.innerWidth ) * 2 - 1,  -( event.clientY / window.innerHeight ) * 2 + 1, 0.5 );                                            //z
 
-  var raycaster = projector.pickingRay( mouse3D2.clone(), camera );
-  var intersects = raycaster.intersectObjects( meshObjects );
+ var raycaster = projector.pickingRay( mouse3D2.clone(), camera );
+ var intersects = raycaster.intersectObjects( meshObjects );
 
   // if not currently over an object
   if(!intersects.length) {
     // here we need to remove the rectangle (i.e. context1)
         for(var i=0; i<meshObjects.length;i++){
-          // meshObjects[i].material.color.setHex(0xCCCCCC);
-          // intersects[ 0 ].object.material.color.setHex( );
+          meshObjects[i].material.ambient.setHex(0xCCCCCC);
+
 
         }
       }
@@ -306,30 +309,37 @@ function handleMoustEvent(event,action){
         var message = intersects[ 0 ].object.subject;
         var message2 = intersects[ 0 ].object.address;
         var message3 = intersects[ 0 ].object.timeDate;
+
         var metrics = context1.measureText(message2);
-        var width = metrics.width;
-        context1.fillStyle = "rgba(0,0,0,0)"; // black border
-        context1.fillRect( 0,0, width+8, (lineHeight * numberOfLines) +8);
-        context1.fillStyle = "rgba(0,0,0,0.95)"; // white filler
-        context1.fillRect ( 2,10, width+4,20+4 );
+        var width = metrics.width+15;
+
+        //context1.fillStyle = "rgba(255,255,255,1)"; // white border
+        //context1.fillRect( 0,0, width+88, (lineHeight * numberOfLines) +8);
+        context1.fillStyle = "rgba(60,0,0,0.95)"; // white filler
+        context1.fillRect ( 2,10, width+118, (lineHeight * numberOfLines)+4 );
         context1.fillStyle = "rgba(255,255,255,1)"; // text color
-        context1.fillText( message, 4, lineHeight );
-
-
+        context1.fillText( message, 14, lineHeight );
         // Custom Test Code
         context1.fillText(message2, 14, (lineHeight * 2));
         context1.fillText(message3, 14, (lineHeight * 3));
-
-
         texture1.needsUpdate = true;
       }
       else if(currentAction == 'click'){
-          intersects[ 0 ].object.material.color.setHex(0xFF0000);
 
+          intersects[ 0 ].object.material.ambient.setHex(0xFF0000);
+          setUpHtml(intersects[ 0 ].object.name);
+}
 
+      //   if ( intersects[ 0 ].object.name = mayor ) {
 
-      }
+      //   }
+
+      //  var mayorVid = document.getElementById("coldest");
+      //  var coldestVid = document.getElementById("mayor");
+
+      // }
     }
+
    projector.unprojectVector( mouse3D2, camera );
    mouse3D2.sub( camera.position);
    mouse3D2.normalize();
@@ -361,6 +371,14 @@ function animate() {
 
     }
 
+
+    function vidplay() {
+
+      
+
+}
+
+   
 
 function applyColor( geo, h, s, v ) {
 
