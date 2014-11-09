@@ -83,29 +83,29 @@ scene.add( ambientLight2 );
 
 
 
-     var material2 = new THREE.MeshLambertMaterial( { ambient: 0xffffff, color: 0xCCCCCC, specular: 0xCCCCCC, shininess: 0.0} );
+     // var material2 = new THREE.MeshLambertMaterial( { ambient: 0xffffff, color: 0xCCCCCC, specular: 0xCCCCCC, shininess: 0.0} );
 
 
-        var loader = new THREE.JSONLoader();
-        loader.load( "/models/police.js", function(geometry){
-        mesh2 = new THREE.Mesh(geometry, material2);
-        scene.add(mesh2);
-        mesh2.rotation.y = 0;
-        mesh2.rotation.x = 0;
-        mesh2.position.x = -20;
-        mesh2.position.y = 0;
-        mesh2.position.z = -20;
-        mesh2.scale.set( 5, 5,5 );
-        mesh2.castShadow = true;
-        mesh2.receiveShadow = true;
-        mesh2.name = "police";
-        mesh2.subject = "The Des Plaines Police Station";
-        mesh2.address = "120 N. Des Plaines Ave., Chicago, IL";
-        mesh2.timeDate = "29 October 1893, 01:36hr";
-        mesh2.updateMatrix();
-        meshObjects.push(mesh2);
-        console.log(mesh2);
-      })
+     //    var loader = new THREE.JSONLoader();
+     //    loader.load( "/models/police.js", function(geometry){
+     //    mesh2 = new THREE.Mesh(geometry, material2);
+     //    scene.add(mesh2);
+     //    mesh2.rotation.y = 0;
+     //    mesh2.rotation.x = 0;
+     //    mesh2.position.x = -20;
+     //    mesh2.position.y = 0;
+     //    mesh2.position.z = -20;
+     //    mesh2.scale.set( 5, 5,5 );
+     //    mesh2.castShadow = true;
+     //    mesh2.receiveShadow = true;
+     //    mesh2.name = "police";
+     //    mesh2.subject = "The Des Plaines Police Station";
+     //    mesh2.address = "120 N. Des Plaines Ave., Chicago, IL";
+     //    mesh2.timeDate = "29 October 1893, 01:36hr";
+     //    mesh2.updateMatrix();
+     //    meshObjects.push(mesh2);
+     //    console.log(mesh2);
+     //  })
 
 
 
@@ -230,7 +230,7 @@ function handleMoustEvent(event,action){
   if(!intersects.length) {
     // here we need to remove the rectangle (i.e. context1)
         for(var i=0; i<meshObjects.length;i++){
-          // meshObjects[i].material.color.setHex(0xCCCCCC);
+          meshObjects[i].material.ambient.setHex(0xCCCCCC);
           // intersects[ 0 ].object.material.color.setHex( );
 
         }
@@ -274,7 +274,8 @@ function handleMoustEvent(event,action){
         texture1.needsUpdate = true;
       }
       else if(currentAction == 'click'){
-          intersects[ 0 ].object.material.color.setHex(0xFF0000);
+          intersects[ 0 ].object.material.ambient.setHex(0xFF0000);
+
 
 
 
@@ -311,6 +312,20 @@ function animate() {
 
     }
 
+
+
+
+
+
+    function vidplay() {
+
+       var mayorvid = document.getElementById("coldest");
+       var coldestvid = document.getElementById("asom");
+      
+
+}
+
+   
 
 function applyColor( geo, h, s, v ) {
 
