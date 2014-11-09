@@ -74,7 +74,7 @@ scene.add( ambientLight2 );
         mesh.castShadow = true;
         mesh.receiveShadow = true;
         mesh.material.transparent = true;
-        mesh.material.opacity = 0;
+        mesh.material.opacity = .25;
         mesh.name = "coldest";
         mesh.subject = "The Squatter's House";
         mesh.address = "234 S. Ashland Ave., Chicago, IL";
@@ -198,17 +198,17 @@ document.addEventListener( 'mousedown', onDocumentMouseDown, false );
      if (currentTime === 'past') {
       meshObjects.forEach( function(el, index, array) {
         if (el.timePeriod === 'past') {
-          var iid = setInterval(function() {  
-            if (el.material.opacity > 0 ) {el.material.opacity -= .1;}
+          var iid = setInterval(function() {
+            if (el.material.opacity > .25 ) {el.material.opacity -= .1;}
           } , 15)
           setTimeout(function() { (clearInterval)(iid) }, 500);
         } else if (el.timePeriod === 'future' ){
-          var iid = setInterval(function() {  
+          var iid = setInterval(function() {
             if (el.material.opacity < 1 ) {console.log('firing cleari');el.material.opacity += .1;}
           } , 15)
           setTimeout(function() { (clearInterval)(iid) }, 500);
-        } 
-      }); 
+        }
+      });
       currentTime = 'future';
       console.log(currentTime)
      }
@@ -217,23 +217,23 @@ document.addEventListener( 'mousedown', onDocumentMouseDown, false );
      if (currentTime === 'future') {
       meshObjects.forEach( function(el, index, array) {
         if (el.timePeriod === 'past') {
-          var iid = setInterval(function() {  
+          var iid = setInterval(function() {
             if (el.material.opacity < 1 ) {el.material.opacity += .1;}
           } , 15)
           setTimeout(function() { (clearInterval)(iid) }, 500);
         } else if (el.timePeriod === 'future' ){
-          var iid = setInterval(function() {  
-            if (el.material.opacity > 0 ) { el.material.opacity -= 0.1;}
+          var iid = setInterval(function() {
+            if (el.material.opacity > .25 ) { el.material.opacity -= 0.1;}
           } , 15)
           console.log('iid is '+iid)
           setTimeout(function() { (clearInterval)(iid) }, 500);
-        } 
-      }); 
+        }
+      });
       currentTime = 'past';
       console.log(currentTime)
      }
     })
-     
+
 }
 
 //////// this works well - the color of the mesh changes and we log a point in space
@@ -390,11 +390,11 @@ function animate() {
 
     function vidplay() {
 
-      
+
 
 }
 
-   
+
 
 function applyColor( geo, h, s, v ) {
 
