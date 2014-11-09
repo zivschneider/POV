@@ -41,10 +41,7 @@ function init() {  // Sets up the scene.
       document.body.appendChild(renderer.domElement);
    
 
-
-
-
-        camera = new THREE.PerspectiveCamera( 45, WIDTH / HEIGHT, 1, 1000 );
+        camera = new THREE.PerspectiveCamera( 45, WIDTH / HEIGHT, 1, 1200 );
         camera.position.set( 0, 0, 100 );
 
 
@@ -56,20 +53,20 @@ function init() {  // Sets up the scene.
         camera.updateProjectionMatrix(); });
 
 
-        var material = new THREE.MeshPhongMaterial( { ambient: 0xffffff, color: 0x000000, specular: 0xCCCCCC, shininess: 0.0} );
+        var material = new THREE.MeshLambertMaterial( {ambient: 0xffffff, color: 0xCCCCCC, specular: 0xCCCCCC, shininess: 0.0} );
       
-ambientLight2 = new THREE.AmbientLight( 0xFFFFCC );
-scene.add( ambientLight2 );
+// ambientLight2 = new THREE.AmbientLight( 0xFFFFCC );
+// scene.add( ambientLight2 );
 
 
         var loader = new THREE.JSONLoader();
         loader.load( "/models/townhouse.js", function(geometry){
         mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
-        mesh.rotation.y = 200;
+        mesh.rotation.y = 0;
         mesh.rotation.x = 0;
-        mesh.position.x = 0;
-        mesh.position.y = -10;
+        mesh.position.x = 10;
+        mesh.position.y = 0;
         mesh.position.z = -10;  
         mesh.scale.set( 10, 10, 10 );
         mesh.castShadow = true;
@@ -84,7 +81,7 @@ scene.add( ambientLight2 );
 
 
 
-     var material2 = new THREE.MeshPhongMaterial( { ambient: 0xffffff, color: 0x000000, specular: 0xCCCCCC, shininess: 0.0} );
+     var material2 = new THREE.MeshLambertMaterial( { ambient: 0xffffff, color: 0xCCCCCC, specular: 0xCCCCCC, shininess: 0.0} );
       
 
         var loader = new THREE.JSONLoader();
@@ -108,7 +105,7 @@ scene.add( ambientLight2 );
 
 
 
-     var material3 = new THREE.MeshPhongMaterial( { ambient: 0xffffff, color: 0x000000, specular: 0xCCCCCC, shininess: 0.0} );
+     var material3 = new THREE.MeshPhongMaterial( { ambient: 0xffffff, color: 0xCCCCCC, specular: 0xCCCCCC, shininess: 0.0} );
       
 
         var loader = new THREE.JSONLoader();
@@ -117,13 +114,13 @@ scene.add( ambientLight2 );
         scene.add(mesh3);
         mesh3.rotation.y = 0;
         mesh3.rotation.x = 0;
-        mesh3.position.x = -20;
-        mesh3.position.y = -10;
-        mesh3.position.z = -20;  
+        mesh3.position.x = -60;
+        mesh3.position.y = 0;
+        mesh3.position.z = -40;  
         mesh3.scale.set( 5, 5,5 );
         mesh3.castShadow = true;
         mesh3.receiveShadow = true;
-        mesh3.name = "police";
+        mesh3.name = "house";
         mesh3.updateMatrix();
         meshObjects.push(mesh3);
         console.log(mesh3);
@@ -156,15 +153,15 @@ scene.add( ambientLight2 );
 
   lighttt = new THREE.SpotLight( 0xffffff,3,100);
   lighttt.position.set( 0, 40, 0 );
-  
-   lighttt.angle = 45;
+ lighttt.angle = 65;
 
 
-        ambientLight = new THREE.AmbientLight( 0x404040);
+      //   ambientLight = new THREE.AmbientLight( 0xCCCCCC);
        
-      //  ambientLight.position.set(0,0,0);
-      scene.add( ambientLight);
-      console.log(ambientLight);
+      // ambientLight.position.set(0,100,100);
+      // scene.add( ambientLight);
+      // console.log(ambientLight);
+  
     scene.add(lighttt);
    
     // CONTROLS
@@ -185,41 +182,7 @@ function onDocumentMouseDown( event ) {
 
 }
 
-// function generateGround( roadLength, groundWidth, offset, materialGround ) {
 
-//         var groundHeight = 0.15;
-
-//         var root = new THREE.Object3D();
-
-//         var sideGeo = new THREE.CubeGeometry( groundWidth, groundHeight, roadLength, 1, 1, 1, materialGround, { ny: false } );
-//         applyColor( sideGeo, 0.3, 0.5, 0.3 );
-
-//         var meshRight = new THREE.Mesh( sideGeo, materialGround );
-//         var meshLeft = new THREE.Mesh( sideGeo, materialGround );
-
-//         meshRight.position.x = offset;
-//         meshLeft.position.x = - offset;
-
-//         meshRight.position.y = groundHeight / 2;
-//         meshLeft.position.y = groundHeight / 2;
-
-//         meshRight.receiveShadow = true;
-//         meshLeft.receiveShadow = true;
-
-//         addStatic( root, meshRight );
-//         addStatic( root, meshLeft );
-
-//         return root;
-
-//       }
-//       function addStatic( parent, child ) {
-
-//         child.matrixAutoUpdate = false;
-//         child.updateMatrix();
-
-//         parent.add( child );
-
-//       }
 
 function update (){
 }
@@ -245,8 +208,6 @@ function handleMoustEvent(event,action){
 
 // mouseX = event.clientX;
 // mouseY = event.clientY;
-
-  // var mouse3D2 = new THREE.Vector3( ( event.clientX / window.innerWidth ) * 2 - 1,  -( event.clientY / window.innerHeight ) * 2 + 1, 0.5 );                                            //z
  var mouse3D2 = new THREE.Vector3( ( event.clientX / window.innerWidth ) * 2 - 1,  -( event.clientY / window.innerHeight ) * 2 + 1, 0.5 );                                            //z
  
   var raycaster = projector.pickingRay( mouse3D2.clone(), camera );
@@ -256,15 +217,15 @@ function handleMoustEvent(event,action){
   if(!intersects.length) {
     // here we need to remove the rectangle (i.e. context1)
         for(var i=0; i<meshObjects.length;i++){
-          meshObjects[i].material.color.setHex(0xCCCCCC);
-           // intersects[ 0 ].object.material.color.setHex( );
+          // meshObjects[i].material.color.setHex(0xCCCCCC);
+          // intersects[ 0 ].object.material.color.setHex( );
  
         }    
       }
   // Detect intersection
   if ( intersects.length > 0 ) {
   // intersects[ 0 ].object.material.ambient.setHex(0xFFFF00);
-         intersects[ 0 ].object.material.color.setHex(0xCCCCCC);
+ // intersects[ 0 ].object.material.color.setHex(0xCCCCCC);
 
   if ( intersects[ 0 ].object.name ) {
     //console.log( intersects[ 0 ].object.name); /// which object did we intersect?
@@ -282,8 +243,6 @@ function handleMoustEvent(event,action){
         texture1.needsUpdate = true;
       }
       else if(currentAction == 'click'){
-        //alert('the current person is ' + intersects[ 0 ].object.name);
-       // setUpHtml(intersects[ 0 ].object.name);
           intersects[ 0 ].object.material.color.setHex(0xFF0000);
 
 
@@ -305,18 +264,16 @@ function animate() {
     // controls.update(clock.getDelta())
     window.controls.update();
     // stats.update();
+    update();
     render();
     targetX = mouseX * .001;
     targetY = mouseY * .001;
     
-    // var delta = clock.getDelta();
-    // var r = clock.getElapsedTime();
    //animate the light!
 
   lighttt.position.set (0,0,0);
   lighttt.shadowCameraVisible = true;
   lighttt.angle = 45;
-
   lighttt.target.position.x = (mouseX - lighttt.position.x ) * 0.00019;
   lighttt.target.position.y = (mouseY - lighttt.position.y ) * 0.00019;
 
