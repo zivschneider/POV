@@ -32,6 +32,7 @@ THREE.PointerLockControls = function ( camera ) {
 	var onMouseMove = function ( event ) {
 
 		if ( scope.enabled === false ) return;
+    if ( scope.mouseDown === false ) return;
 
 		var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
 		var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
@@ -42,6 +43,14 @@ THREE.PointerLockControls = function ( camera ) {
 		pitchObject.rotation.x = Math.max( - PI_2, Math.min( PI_2, pitchObject.rotation.x ) );
 
 	};
+
+  var onMouseDown = function (e) {
+    this.mouseDown = true;
+  }
+
+  var onMouseUp = function (e) {
+    this.mouseDown = false;
+  }
 
 	var onKeyDown = function ( event ) {
 
