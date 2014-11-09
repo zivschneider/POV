@@ -274,17 +274,22 @@ function handleMoustEvent(event,action){
         // Custom Test Code
         context1.fillText(message2, 14, (lineHeight * 2));
         context1.fillText(message3, 14, (lineHeight * 3));
-
-
         texture1.needsUpdate = true;
       }
       else if(currentAction == 'click'){
 
           intersects[ 0 ].object.material.ambient.setHex(0xFF0000);
           setUpHtml(intersects[ 0 ].object.name);
+}
 
+      //   if ( intersects[ 0 ].object.name = mayor ) {
 
-      }
+      //   }
+
+      //  var mayorVid = document.getElementById("coldest");
+      //  var coldestVid = document.getElementById("mayor");
+
+      // }
     }
 
    projector.unprojectVector( mouse3D2, camera );
@@ -321,8 +326,6 @@ function animate() {
 
     function vidplay() {
 
-       var mayorVid = document.getElementById("coldest");
-       var coldestVid = document.getElementById("mayor");
       
 
 }
