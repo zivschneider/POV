@@ -43,9 +43,22 @@ function init() {  // Sets up the scene.
 ambientLight = new THREE.AmbientLight( 0x444444 );
 scene.add( ambientLight );
 
-      camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000);
-      camera.position.set(0,0,100);
-      scene.add(camera);
+
+
+
+        camera = new THREE.PerspectiveCamera( 45, WIDTH / HEIGHT, 1, 1000 );
+        camera.position.set( 0, 0, 100 );
+
+        // CONTROLS
+
+        controlsCamera = new THREE.TrackballControls( camera );
+        controlsCamera.dynamicDampingFactor = 0.25;
+
+
+
+      // camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000);
+      // camera.position.set(0,0,100);
+      // scene.add(camera);
 
         window.addEventListener('resize', function() {
         var WIDTH = window.innerWidth,
@@ -54,16 +67,7 @@ scene.add( ambientLight );
         camera.aspect = WIDTH / HEIGHT;
         camera.updateProjectionMatrix(); });
 
-        ambientLight = new THREE.AmbientLight( 0x404040);
-        scene.add( ambientLight );
-     
 
-        // var mapHeight = THREE.ImageUtils.loadTexture( "/models/younghispanicwoman.jpg");
-        // mapHeight.anisotropy = 0.1;
-        // mapHeight.repeat.set( 1, 1 );
-        // mapHeight.offset.set( 0.001, 0.04 );
-        // mapHeight.wrapS = mapHeight.wrapT = THREE.RepeatWrapping;
-        // mapHeight.format = THREE.RGBFormat;
         var material = new THREE.MeshPhongMaterial( { ambient: 0x000000, color: 0x000000, specular: 0xCCCCCC, shininess: 0.1} );
       
 
@@ -80,12 +84,36 @@ scene.add( ambientLight );
         mesh.scale.set( 10, 10, 10 );
         mesh.castShadow = true;
         mesh.receiveShadow = true;
-        mesh.name = "Jane Doe";
+        mesh.name = "townhouse";
         mesh.updateMatrix();
         meshObjects.push(mesh);
         console.log(mesh);
       })
 
+
+
+
+
+     var material2 = new THREE.MeshPhongMaterial( { ambient: 0x000000, color: 0x000000, specular: 0xCCCCCC, shininess: 0.1} );
+      
+
+        var loader = new THREE.JSONLoader();
+        loader.load( "/models/police.js", function(geometry){
+        mesh2 = new THREE.Mesh(geometry, material2);
+        scene.add(mesh2);
+        mesh2.rotation.y = 0;
+        mesh2.rotation.x = 0;
+        mesh2.position.x = -20;
+        mesh2.position.y = 0;
+        mesh2.position.z = -20;  
+        mesh2.scale.set( 5, 5,5 );
+        mesh2.castShadow = true;
+        mesh2.receiveShadow = true;
+        mesh2.name = "police";
+        mesh2.updateMatrix();
+        meshObjects.push(mesh2);
+        console.log(mesh2);
+      })
 
 
 
@@ -120,6 +148,9 @@ document.addEventListener( 'mousedown', onDocumentMouseDown, false );
   // lighttt.angle = 45;
 
 
+        ambientLight = new THREE.AmbientLight( 0x404040);
+        scene.add( ambientLight);
+     
   scene.add(lighttt);
 
 
@@ -132,6 +163,42 @@ function onDocumentMouseDown( event ) {
   handleMoustEvent(event,'click');
 
 }
+
+function generateGround( roadLength, groundWidth, offset, materialGround ) {
+
+        var groundHeight = 0.15;
+
+        var root = new THREE.Object3D();
+
+        var sideGeo = new THREE.CubeGeometry( groundWidth, groundHeight, roadLength, 1, 1, 1, materialGround, { ny: false } );
+        applyColor( sideGeo, 0.3, 0.5, 0.3 );
+
+        var meshRight = new THREE.Mesh( sideGeo, materialGround );
+        var meshLeft = new THREE.Mesh( sideGeo, materialGround );
+
+        meshRight.position.x = offset;
+        meshLeft.position.x = - offset;
+
+        meshRight.position.y = groundHeight / 2;
+        meshLeft.position.y = groundHeight / 2;
+
+        meshRight.receiveShadow = true;
+        meshLeft.receiveShadow = true;
+
+        addStatic( root, meshRight );
+        addStatic( root, meshLeft );
+
+        return root;
+
+      }
+      function addStatic( parent, child ) {
+
+        child.matrixAutoUpdate = false;
+        child.updateMatrix();
+
+        parent.add( child );
+
+      }
 
 function update (){
 }
@@ -211,6 +278,7 @@ function handleMoustEvent(event,action){
 
 function animate() {
     requestAnimationFrame(animate);
+    generateGround();
     update();
     // stats.update();
     render();
@@ -230,6 +298,15 @@ function animate() {
 
     } 
 
+
+function applyColor( geo, h, s, v ) {
+
+        for ( var j = 0, jl = geo.faces.length; j < jl; j ++ ) {
+
+          geo.faces[ j ].color.setHSV( h, s, v );
+
+        }
+}
 function render() {
 renderer.render( scene, camera); 
     
