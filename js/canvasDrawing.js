@@ -234,6 +234,12 @@ document.addEventListener( 'mousedown', onDocumentMouseDown, false );
      }
     })
 
+    $(document).on('keydown', function(e) {
+      if ((e.keyCode === 27) && $('.video-container').length) {
+        $('.video-container').remove();
+        $('canvas').animate({opacity: 1}, 200);
+      }
+    })
 }
 
 //////// this works well - the color of the mesh changes and we log a point in space
