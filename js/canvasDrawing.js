@@ -153,7 +153,7 @@ document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 
   lighttt = new THREE.SpotLight( 0xffffff,3,100);
   lighttt.position.set( 0, 40, 0 );
- lighttt.angle = 65;
+  lighttt.angle = 65;
 
 
        ambientLight = new THREE.AmbientLight( 0xCCCCCC);
@@ -174,6 +174,22 @@ document.addEventListener( 'mousedown', onDocumentMouseDown, false );
     window.controls.enabled = true
     window.controls.lookVertical = false
 
+
+
+/////image planes of streets and background
+    var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
+        map:THREE.ImageUtils.loadTexture('img/front.jpg')
+    });
+    img.map.needsUpdate = true; //ADDED
+
+    // plane
+    var plane = new THREE.Mesh(new THREE.PlaneGeometry(200, 200),img);
+    plane.overdraw = true;
+    scene.add(plane);
+
+
+    // window.controls = new THREE.FirstPersonControls( camera, $('canvas')[0] );
+>>>>>>> Stashed changes
 
 }
 
