@@ -328,7 +328,22 @@ function handleMoustEvent(event,action){
       else if(currentAction == 'click'){
 
           intersects[ 0 ].object.material.ambient.setHex(0xFF0000);
-          setUpHtml(intersects[ 0 ].object.name);
+
+      var name = intersects[0].object.name;
+
+       if (( name === 'coldest' ) || ( name === 'mayor' )) {
+
+        $('canvas').animate({opacity: 0}, 200, function(){
+
+         var $video = $('#'+name)
+         var $div = $('<div>', { class: 'video-container' });
+         $div.append($video)
+         $('body').append($div);
+         $video.fadeIn();
+         $video[0].play();
+
+        });
+       }
 }
 
       //   if ( intersects[ 0 ].object.name = mayor ) {
