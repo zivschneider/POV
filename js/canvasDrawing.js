@@ -148,8 +148,8 @@ scene.add( ambientLight2 );
   sprite1.position.set( 50, 50, 0 );
  scene.add( sprite1 ); 
 
-// document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-// document.addEventListener( 'mousedown', onDocumentMouseDown, false );  
+document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+document.addEventListener( 'mousedown', onDocumentMouseDown, false );  
 
   lighttt = new THREE.SpotLight( 0xffffff,3,100);
   lighttt.position.set( 0, 40, 0 );
@@ -166,11 +166,14 @@ scene.add( ambientLight2 );
    
     // CONTROLS
 
-    window.controls = new THREE.PointerLockControls( camera );
-    window.controls.enabled = true;
-    scene.add( window.controls.getObject() );
+    // window.controls = new THREE.PointerLockControls( camera );
+    // window.controls.enabled = true;
+    // scene.add( window.controls.getObject() );
 
-    // window.controls = new THREE.FirstPersonControls( camera, $('canvas')[0] );
+    window.controls = new THREE.FirstPersonControls( camera, $('canvas')[0] );
+    window.controls.enabled = true
+    window.controls.lookVertical = false
+
 
 }
 
@@ -261,8 +264,8 @@ function handleMoustEvent(event,action){
 function animate() {
     requestAnimationFrame(animate);
     // generateGround();
-    // controls.update(clock.getDelta())
-    window.controls.update();
+    controls.update(clock.getDelta())
+    // window.controls.update();
     // stats.update();
     update();
     render();

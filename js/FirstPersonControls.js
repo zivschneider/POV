@@ -7,14 +7,15 @@
 THREE.FirstPersonControls = function ( object, domElement ) {
 
 	this.object = object;
+  window.cam = this.object
 	this.target = new THREE.Vector3( 0, 0, 0 );
 
 	this.domElement = ( domElement !== undefined ) ? domElement : document;
 
 	this.enabled = true;
 
-	this.movementSpeed = 1.0;
-	this.lookSpeed = 0.005;
+	this.movementSpeed = 15; // 1.0;
+	this.lookSpeed = .125; // 0.005;
 
 	this.lookVertical = true;
 	this.autoForward = false;
@@ -121,6 +122,7 @@ THREE.FirstPersonControls = function ( object, domElement ) {
 	};
 
 	this.onMouseMove = function ( event ) {
+    console.log('mousemove')
 
 		if ( this.domElement === document ) {
 
