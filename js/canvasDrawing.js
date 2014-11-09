@@ -42,7 +42,6 @@ function init() {  // Sets up the scene.
 
 
         camera = new THREE.PerspectiveCamera( 45, WIDTH / HEIGHT, 1, 1200 );
-        camera.position.set( 0, 0, 100 );
 
 
         window.addEventListener('resize', function() {
@@ -179,6 +178,9 @@ document.addEventListener( 'mousedown', onDocumentMouseDown, false );
     // window.controls.enabled = true;
     // scene.add( window.controls.getObject() );
 
+    camera.position.set( -33.31772118642715, -5.396255313359101e-15, 81.40970700559271) // 0, 0, 100 );
+    camera.lookAt( 63.586722336019506, 7.269786823776647e-16, 106.09834458657208)
+
     window.controls = new THREE.FirstPersonControls( camera, $('canvas')[0] );
     window.controls.enabled = true
     window.controls.lookVertical = false
@@ -290,11 +292,10 @@ function handleMoustEvent(event,action){
 function animate() {
     requestAnimationFrame(animate);
     // generateGround();
-    controls.update(clock.getDelta())
     // window.controls.update();
     // stats.update();
-    update();
     render();
+    window.controls.update(clock.getDelta())
     targetX = mouseX * .001;
     targetY = mouseY * .001;
 
