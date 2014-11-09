@@ -61,7 +61,7 @@ function init() {  // Sets up the scene.
         camera.updateProjectionMatrix(); });
 
 
-        var material = new THREE.MeshPhongMaterial( { ambient: 0x000000, color: 0x000000, specular: 0xCCCCCC, shininess: 0.0} );
+        var material = new THREE.MeshPhongMaterial( { ambient: 0xffffff, color: 0x000000, specular: 0xCCCCCC, shininess: 0.0} );
       
 ambientLight2 = new THREE.AmbientLight( 0xFFFFCC );
 scene.add( ambientLight2 );
@@ -74,7 +74,7 @@ scene.add( ambientLight2 );
         mesh.rotation.y = 200;
         mesh.rotation.x = 0;
         mesh.position.x = 0;
-        mesh.position.y = 0;
+        mesh.position.y = -10;
         mesh.position.z = -10;  
         mesh.scale.set( 10, 10, 10 );
         mesh.castShadow = true;
@@ -89,7 +89,7 @@ scene.add( ambientLight2 );
 
 
 
-     var material2 = new THREE.MeshPhongMaterial( { ambient: 0x000000, color: 0x000000, specular: 0xCCCCCC, shininess: 0.0} );
+     var material2 = new THREE.MeshPhongMaterial( { ambient: 0xffffff, color: 0x000000, specular: 0xCCCCCC, shininess: 0.0} );
       
 
         var loader = new THREE.JSONLoader();
@@ -113,7 +113,7 @@ scene.add( ambientLight2 );
 
 
 
-     var material3 = new THREE.MeshPhongMaterial( { ambient: 0x000000, color: 0x000000, specular: 0xCCCCCC, shininess: 0.0} );
+     var material3 = new THREE.MeshPhongMaterial( { ambient: 0xffffff, color: 0x000000, specular: 0xCCCCCC, shininess: 0.0} );
       
 
         var loader = new THREE.JSONLoader();
@@ -123,7 +123,7 @@ scene.add( ambientLight2 );
         mesh3.rotation.y = 0;
         mesh3.rotation.x = 0;
         mesh3.position.x = -20;
-        mesh3.position.y = 0;
+        mesh3.position.y = -10;
         mesh3.position.z = -20;  
         mesh3.scale.set( 5, 5,5 );
         mesh3.castShadow = true;
