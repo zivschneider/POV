@@ -47,9 +47,6 @@ function init() {  // Sets up the scene.
         camera = new THREE.PerspectiveCamera( 45, WIDTH / HEIGHT, 1, 1000 );
         camera.position.set( 0, 0, 100 );
 
-        // CONTROLS
-
-        window.controls = new THREE.PointerLockControls( camera );
 
         window.addEventListener('resize', function() {
         var WIDTH = window.innerWidth,
@@ -154,8 +151,8 @@ scene.add( ambientLight2 );
   sprite1.position.set( 50, 50, 0 );
  scene.add( sprite1 ); 
 
-document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-document.addEventListener( 'mousedown', onDocumentMouseDown, false );  
+// document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+// document.addEventListener( 'mousedown', onDocumentMouseDown, false );  
 
   lighttt = new THREE.SpotLight( 0xffffff,3,100);
   lighttt.position.set( 0, 40, 0 );
@@ -169,7 +166,14 @@ document.addEventListener( 'mousedown', onDocumentMouseDown, false );
       scene.add( ambientLight);
       console.log(ambientLight);
     scene.add(lighttt);
+   
+    // CONTROLS
 
+    window.controls = new THREE.PointerLockControls( camera );
+    window.controls.enabled = true;
+    scene.add( window.controls.getObject() );
+
+    // window.controls = new THREE.FirstPersonControls( camera, $('canvas')[0] );
 
 }
 
@@ -298,7 +302,8 @@ function handleMoustEvent(event,action){
 function animate() {
     requestAnimationFrame(animate);
     // generateGround();
-    update();
+    // controls.update(clock.getDelta())
+    window.controls.update();
     // stats.update();
     render();
     targetX = mouseX * .001;
@@ -315,7 +320,7 @@ function animate() {
   lighttt.target.position.x = (mouseX - lighttt.position.x ) * 0.00019;
   lighttt.target.position.y = (mouseY - lighttt.position.y ) * 0.00019;
 
-  //camera.position.y += (mouseY - camera.position.y ) * -0.00000007;
+  // camera.position.y += (mouseY - camera.position.y ) * -0.00000007;
 
     } 
 

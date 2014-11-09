@@ -103,7 +103,7 @@ THREE.PointerLockControls = function ( camera ) {
 
 	};
 
-	// document.addEventListener( 'mousemove', onMouseMove, false );
+	document.addEventListener( 'mousemove', onMouseMove, false );
 	document.addEventListener( 'keydown', onKeyDown, false );
 	document.addEventListener( 'keyup', onKeyUp, false );
 
