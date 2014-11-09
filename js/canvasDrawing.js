@@ -156,10 +156,10 @@ function init() {  // Sets up the scene.
  lighttt.angle = 65;
 
 
-      //   ambientLight = new THREE.AmbientLight( 0xCCCCCC);
+       ambientLight = new THREE.AmbientLight( 0xCCCCCC);
        
-      // ambientLight.position.set(0,100,100);
-      // scene.add( ambientLight);
+       ambientLight.position.set(0,100,100);
+       scene.add( ambientLight);
       // console.log(ambientLight);
   
     scene.add(lighttt);
