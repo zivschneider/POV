@@ -198,13 +198,13 @@ document.addEventListener( 'mousedown', onDocumentMouseDown, false );
      if (currentTime === 'past') {
       meshObjects.forEach( function(el, index, array) {
         if (el.timePeriod === 'past') {
-          iid = setInterval(function() {  
+          var iid = setInterval(function() {  
             if (el.material.opacity > 0 ) {el.material.opacity -= .1;}
           } , 15)
           setTimeout(function() { (clearInterval)(iid) }, 500);
         } else if (el.timePeriod === 'future' ){
-          iid = setInterval(function() {  
-            if (el.material.opacity < 1 ) {el.material.opacity += .1;}
+          var iid = setInterval(function() {  
+            if (el.material.opacity < 1 ) {console.log('firing cleari');el.material.opacity += .1;}
           } , 15)
           setTimeout(function() { (clearInterval)(iid) }, 500);
         } 
@@ -217,14 +217,15 @@ document.addEventListener( 'mousedown', onDocumentMouseDown, false );
      if (currentTime === 'future') {
       meshObjects.forEach( function(el, index, array) {
         if (el.timePeriod === 'past') {
-          iid = setInterval(function() {  
+          var iid = setInterval(function() {  
             if (el.material.opacity < 1 ) {el.material.opacity += .1;}
           } , 15)
           setTimeout(function() { (clearInterval)(iid) }, 500);
         } else if (el.timePeriod === 'future' ){
-          iid = setInterval(function() {  
-            if (el.material.opacity > 0 ) {el.material.opacity -= .1;}
+          var iid = setInterval(function() {  
+            if (el.material.opacity > 0 ) { el.material.opacity -= 0.1;}
           } , 15)
+          console.log('iid is '+iid)
           setTimeout(function() { (clearInterval)(iid) }, 500);
         } 
       }); 
@@ -293,7 +294,7 @@ function handleMoustEvent(event,action){
   // intersects[ 0 ].object.material.ambient.setHex(0xFFFF00);
  // intersects[ 0 ].object.material.color.setHex(0xCCCCCC);
 
-  if ( intersects[ 0 ].object.name ) {
+  if ( intersects[ 0 ].object.name && (intersects[0].object.material.opacity > .5) ) {
     //console.log( intersects[ 0 ].object.name); /// which object did we intersect?
     if(currentAction == 'hover'){
 
