@@ -58,13 +58,8 @@ scene.add( ambientLight );
         scene.add( ambientLight );
      
 
-        // var mapHeight = THREE.ImageUtils.loadTexture( "/models/younghispanicwoman.jpg");
-        // mapHeight.anisotropy = 0.1;
-        // mapHeight.repeat.set( 1, 1 );
-        // mapHeight.offset.set( 0.001, 0.04 );
-        // mapHeight.wrapS = mapHeight.wrapT = THREE.RepeatWrapping;
-        // mapHeight.format = THREE.RGBFormat;
-        var material = new THREE.MeshPhongMaterial( { ambient: 0x000000, color: 0x000000, specular: 0xCCCCCC, shininess: 0.1} );
+       
+        var material1 = new THREE.MeshPhongMaterial( { ambient: 0x000000, color: 0x000000, specular: 0xCCCCCC, shininess: 0.1} );
       
 
 
