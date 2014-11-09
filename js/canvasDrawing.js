@@ -3,6 +3,7 @@
       var particleMaterial;
       var raycaster;
       var meshObjects = [];
+      window.meshObjects = meshObjects
       var mouseX = 0, mouseY = 0;
       var targetX = 0, targetY = 0;
       var clock = new THREE.Clock();
@@ -14,6 +15,7 @@
       var lighttt;
       var mouse3D2;
       var ambientLight, ambientLight2;
+      var currentTime = 'past';
 
 container = document.createElement('div');
 document.body.appendChild(container);
@@ -62,6 +64,7 @@ scene.add( ambientLight2 );
         loader.load( "/models/townhouse.js", function(geometry){
         mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
+        console.log("added townhouse")
         mesh.rotation.y = 0;
         mesh.rotation.x = 0;
         mesh.position.x = 10;
@@ -70,13 +73,15 @@ scene.add( ambientLight2 );
         mesh.scale.set( 10, 10, 10 );
         mesh.castShadow = true;
         mesh.receiveShadow = true;
+        mesh.material.transparent = true;
+        mesh.material.opacity = 0;
         mesh.name = "townhouse";
         mesh.subject = "The Squatter's House";
         mesh.address = "234 S. Ashland Ave., Chicago, IL";
         mesh.timeDate = "23 February 2023, 21:25hr";
+        mesh.timePeriod = "future";
         mesh.updateMatrix();
         meshObjects.push(mesh);
-        console.log(mesh);
       })
 
 
@@ -98,10 +103,12 @@ scene.add( ambientLight2 );
         mesh2.scale.set( 5, 5,5 );
         mesh2.castShadow = true;
         mesh2.receiveShadow = true;
+        mesh2.material.transparent = true;
         mesh2.name = "police";
         mesh2.subject = "The Des Plaines Police Station";
         mesh2.address = "120 N. Des Plaines Ave., Chicago, IL";
         mesh2.timeDate = "29 October 1893, 01:36hr";
+        mesh2.timePeriod = "past";
         mesh2.updateMatrix();
         meshObjects.push(mesh2);
         console.log(mesh2);
@@ -125,12 +132,15 @@ scene.add( ambientLight2 );
         mesh3.scale.set( 5, 5,5 );
         mesh3.castShadow = true;
         mesh3.receiveShadow = true;
+        mesh3.material.transparent = true;
         mesh3.name = "house";
         mesh3.subject = "The Mayor's House";
         mesh3.address = "231 S. Ashland Ave., Chicago, IL";
         mesh3.timeDate = "28 October 1893, 20:00 hr";
+        mesh3.timePeriod = "past";
         mesh3.updateMatrix();
         meshObjects.push(mesh3);
+        window.mayor = mesh3
         console.log(mesh3);
       })
 
@@ -185,6 +195,46 @@ document.addEventListener( 'mousedown', onDocumentMouseDown, false );
     window.controls.enabled = true
     window.controls.lookVertical = false
 
+
+    $(document).on('stepTimeForward', function (e) {
+     if (currentTime === 'past') {
+      meshObjects.forEach( function(el, index, array) {
+        if (el.timePeriod === 'past') {
+          iid = setInterval(function() {  
+            if (el.material.opacity > 0 ) {el.material.opacity -= .1;}
+          } , 15)
+          setTimeout(function() { (clearInterval)(iid) }, 500);
+        } else if (el.timePeriod === 'future' ){
+          iid = setInterval(function() {  
+            if (el.material.opacity < 1 ) {el.material.opacity += .1;}
+          } , 15)
+          setTimeout(function() { (clearInterval)(iid) }, 500);
+        } 
+      }); 
+      currentTime = 'future';
+      console.log(currentTime)
+     }
+    })
+   $(document).on('stepTimeBack', function (e) {
+     if (currentTime === 'future') {
+      meshObjects.forEach( function(el, index, array) {
+        if (el.timePeriod === 'past') {
+          iid = setInterval(function() {  
+            if (el.material.opacity < 1 ) {el.material.opacity += .1;}
+          } , 15)
+          setTimeout(function() { (clearInterval)(iid) }, 500);
+        } else if (el.timePeriod === 'future' ){
+          iid = setInterval(function() {  
+            if (el.material.opacity > 0 ) {el.material.opacity -= .1;}
+          } , 15)
+          setTimeout(function() { (clearInterval)(iid) }, 500);
+        } 
+      }); 
+      currentTime = 'past';
+      console.log(currentTime)
+     }
+    })
+     
 }
 
 //////// this works well - the color of the mesh changes and we log a point in space
