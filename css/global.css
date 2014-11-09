@@ -40,3 +40,7 @@ color: 660000;
 a:active {
 color: ff6666;
 }
+
+canvas {
+  cursor: crosshair;
+}
