@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+</head>
+
+<body style="margin: 0;">
+
+  <script src="http://masks.ziv.bz/js/three.min.js"></script>
+  <script src="http://masks.ziv.bz/js/TrackballControls.js"></script>
+  <script src="http://masks.ziv.bz/js/Detector.js"></script>
+  <script src="http://masks.ziv.bz/js/stats.min.js"></script>
+  
+
+
+<script>
+
+    // Set up the scene, camera, and renderer as global variables.
+    var scene, camera, renderer, mesh, mesh2, mesh3 ;
+
+
+    //contains the objects
+
+    var meshObjects = [];
+    var raycaster;  
+
+      var mouseX = 0, mouseY = 0;
+      var targetX = 0, targetY = 0;
+      var clock = new THREE.Clock();
+      var windowHalfX = window.innerWidth / 2;
+      var windowHalfY = window.innerHeight / 2;
+
+    document.addEventListener('mousemove', onDocumentMouseMove, false );
+    window.addEventListener('resize', onWindowResize, false );
+
+    init();
+    animate();
+
+
+
+   
+function init() {  // Sets up the scene.
+container = document.createElement('div');
+document.body.appendChild(container);
+
+// Create the scene and set the scene size.
+      scene = new THREE.Scene();
+      var WIDTH = window.innerWidth,
+          HEIGHT = window.innerHeight;
+
+      raycaster = new THREE.Raycaster();
+      // Create a renderer and add it to the DOM.
+      renderer = new THREE.WebGLRenderer({antialias:true});
+      renderer.setSize(WIDTH, HEIGHT);
+      document.body.appendChild(renderer.domElement);
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      // Create a camera, zoom it out from the model a bit, and add it to the scene.
+      camera = new THREE.CombinedCamera ( WIDTH , HEIGHT, 45, 20, 600,300, 1600);
+      //CombinedCamera(width, height, fov, near, far, orthoNear, orthoFar)    
+      camera.position.set(0,0,100);
+      scene.add(camera);
+
+      // Create an event listener that resizes the renderer with the browser window.
+      window.addEventListener('resize', function() {
+      var WIDTH = window.innerWidth,
+            HEIGHT = window.innerHeight;
+        renderer.setSize(WIDTH, HEIGHT);
+        camera.aspect = WIDTH / HEIGHT;
+        camera.updateProjectionMatrix();
+      });
+
+      // Set the background color of the scene.
+      renderer.setClearColorHex(0x000000, 1);
+
+
+///texture bumpmap1
+ var mapHeight = THREE.ImageUtils.loadTexture( "models/young_texture.jpg");
+        mapHeight.anisotropy = 0.1;
+        mapHeight.repeat.set( 1, 1 );
+        mapHeight.offset.set( 0.001, 0.05 );
+        mapHeight.wrapS = mapHeight.wrapT = THREE.RepeatWrapping;
+        mapHeight.format = THREE.RGBFormat;
+        var material = new THREE.MeshPhongMaterial( { ambient: 0x6699CC, color: 0xFFFFCC, specular: 0xCCCCCC, shininess: 0.1, bumpMap: mapHeight, bumpScale: 0.1, metal: false } );
+  
+///mesh1 
+var loader = new THREE.JSONLoader();
+      loader.load( "models/mask2.js", function(geometry){
+        // var material = new THREE.MeshLambertMaterial({color: 0xff0000});
+        mesh = new THREE.Mesh(geometry, material2);
+        scene.add(mesh);
+        mesh.rotation.y = 200;
+        mesh.rotation.x = 0.02;
+       mesh.position.x = -4.2;
+        mesh.position.y = -6.2;
+        mesh.position.z = 20;
+        mesh.scale.set( 5, 5, 5 );
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        mesh.name = 'mesh1';
+        scene.add( mesh );
+        console.log(mesh);
+        //this adds the objects to the list of things to interact with
+        meshObjects.push(mesh);
+
+      })
+
+var mapHeight3 = THREE.ImageUtils.loadTexture( "models/young_texture.jpg");
+        mapHeight3.anisotropy = 0.1;
+        mapHeight3.repeat.set( 1, 1 );
+        mapHeight3.offset.set( 0.001, 0.05 );
+        mapHeight3.wrapS = mapHeight3.wrapT = THREE.RepeatWrapping;
+        mapHeight3.format = THREE.RGBFormat;
+        var material3 = new THREE.MeshPhongMaterial( { ambient: 0x6699CC, color: 0xFFFFCC, specular: 0xCCCCCC, shininess: 0.1, bumpMap: mapHeight3, bumpScale: 0.1, metal: false } );
+///mesh1 
+var loader3 = new THREE.JSONLoader();
+       loader3.load( "models/mask2.js", function(geometry){
+        //var material = new THREE.MeshLambertMaterial({color: 0xff0000});
+        mesh3 = new THREE.Mesh(geometry, material3);
+        scene.add(mesh3);
+        mesh3.rotation.y = 200;
+        mesh3.rotation.x = 0.02;
+        mesh3.position.x = -10.2;
+        mesh3.position.y = -6.2;
+        mesh3.position.z = 20;
+        mesh3.scale.set( 4, 4, 4 );
+        mesh3.castShadow = true;
+        mesh3.receiveShadow = true;
+        mesh3.name = 'mesh3';
+        scene.add( mesh3 );
+        console.log(mesh3);
+        meshObjects.push(mesh3);
+        mesh3.name = "John Doe";
+      })
+
+var mapHeight4 = THREE.ImageUtils.loadTexture( "models/young_texture.jpg");
+        mapHeight4.anisotropy = 0.1;
+        mapHeight4.repeat.set( 1, 1 );
+        mapHeight4.offset.set( 0.1, 0.5 );
+        mapHeight4.wrapS = mapHeight4.wrapT = THREE.RepeatWrapping;
+        mapHeight4.format = THREE.RGBFormat;
+        var material4 = new THREE.MeshPhongMaterial( { ambient: 0x6699CC, color: 0xFFFFCC, specular: 0xCCCCCC, shininess: 0.1, bumpMap: mapHeight3, bumpScale: 0.1, metal: false } );
+///mesh1 
+var loader4 = new THREE.JSONLoader();
+       loader4.load( "models/mask2.js", function(geometry){
+        // var material = new THREE.MeshLambertMaterial({color: 0xff0000});
+        mesh4 = new THREE.Mesh(geometry, material4);
+        scene.add(mesh4);
+        mesh4.rotation.y = 120;
+        mesh4.rotation.x = 0.02;
+        mesh4.position.x = -10.2;
+        mesh4.position.y = 6.2;
+        mesh4.position.z = 20;
+        mesh4.scale.set( 4, 4, 4 );
+        mesh4.castShadow = true;
+        mesh4.receiveShadow = true;
+        mesh4.name = 'mesh4';
+        scene.add( mesh4 );
+        console.log(mesh4);
+        meshObjects.push(mesh4);
+
+      })
+//mesh2
+
+var mapHeight2 = THREE.ImageUtils.loadTexture( "models/blackman_texture.jpg");
+        mapHeight2.anisotropy = 0.1;
+        mapHeight2.repeat.set( 1, 1 );
+        mapHeight2.offset.set( 0.001, 0.0001 );
+        mapHeight2.wrapS = mapHeight.wrapT = THREE.RepeatWrapping;
+        mapHeight2.format = THREE.RGBFormat;
+        var material2 = new THREE.MeshPhongMaterial( { ambient: 0x6699CC, color: 0xFFFFCC, specular: 0xCCCCCC, shininess: 0.1, bumpMap: mapHeight2, bumpScale: 0.5, metal: false } );
+        ambientLight = new THREE.AmbientLight( 0x444444 );
+        scene.add( ambientLight );
+
+
+var loader2 = new THREE.JSONLoader();
+      loader2.load( "http://masks.ziv.bz/models/blackman.js", function(geometry){
+        var material = new THREE.MeshLambertMaterial({color: 0xFFFFCC});
+        mesh2 = new THREE.Mesh(geometry, material2);
+        mesh2.rotation.y = 200;
+        mesh2.rotation.x = 0.08;
+        mesh2.position.x = -12;
+        mesh2.position.y = 4;
+        mesh2.position.z = -10;
+        mesh2.scale.set( 0.1, 0.1, 0.10 );
+        mesh2.castShadow = true;
+        mesh2.receiveShadow = true;
+        mesh2.name = 'mesh2';
+        scene.add(mesh2);
+        console.log(mesh2);
+
+        meshObjects.push(mesh2);
+      
+      })      
+var mapHeight5 = THREE.ImageUtils.loadTexture( "models/blackman_texture.jpg");
+        mapHeight5.anisotropy = 0.1;
+        mapHeight5.repeat.set( 1, 1 );
+        mapHeight5.offset.set( 0.001, 0.0001 );
+        mapHeight5.wrapS = mapHeight.wrapT = THREE.RepeatWrapping;
+        mapHeight5.format = THREE.RGBFormat;
+        var material5 = new THREE.MeshPhongMaterial( { ambient: 0x6699CC, color: 0xFFFFCC, specular: 0xCCCCCC, shininess: 0.1, bumpMap: mapHeight5, bumpScale: 0.5, metal: false } );
+        ambientLight = new THREE.AmbientLight( 0x444444 );
+        scene.add( ambientLight );
+
+var loader5 = new THREE.JSONLoader();
+      loader5.load( "http://masks.ziv.bz/models/blackman.js", function(geometry){
+        var material = new THREE.MeshLambertMaterial({color: 0xFFFFCC});
+        mesh5 = new THREE.Mesh(geometry, material5);
+        mesh5.rotation.y = 180;
+        mesh5.rotation.x = 0.08;
+        mesh5.position.x = -32;
+        mesh5.position.y = 6;
+        mesh5.position.z = 0;
+        mesh5.scale.set( 0.09, 0.09, 0.09 );
+        mesh5.castShadow = true;
+        mesh5.receiveShadow = true;
+        mesh5.name = 'mesh5';
+        scene.add(mesh5);
+        console.log(mesh5);
+        meshObjects.push(mesh5);
+      
+      });
+
+document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+    
+    // Renders the scene and updates the render as needed.
+
+  }
+function onDocumentMouseMove(event) {
+
+        mouseX = ( event.clientX - windowHalfX ) * 10;
+        mouseY = ( event.clientY - windowHalfY ) * 10; 
+      }
+
+
+
+function onDocumentMouseDown( event ) {
+
+      event.preventDefault();
+      //prevent other control events from being activated
+
+        var vector = new THREE.Vector3();
+        vector.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1, 0.5 );
+        vector.unproject( camera );
+        raycaster.ray.set( camera.position, vector.sub( camera.position ).normalize() );
+      }
+
+
+function update() {
+
+var intersects = ray.intersectObjects( meshObjects );
+
+  if ( intersects[ 0 ].object != INTERSECTED ) 
+    {
+      // update text, if it has a "name" field.
+      if ( intersects[ 0 ].object.name ) {
+        var message = intersects[ 0 ].object.name;
+        var metrics = container.measureText(message);
+        var width = metrics.width;
+       
+      }
+      else
+      {
+      }
+    }
+  }
+ 
+
+  function animate() {
+
+    requestAnimationFrame(animate);
+    update();
+    var delta = clock.getDelta();
+    var r = clock.getElapsedTime();
+
+    var spotLight = new THREE.SpotLight(0xffffff,0.06);
+    spotLight.target.position.set(mouseX,mouseY,0)
+    spotLight.angle = 120;
+    spotLight.exponent = 2;
+    spotLight.shadowCameraVisible = true;
+
+    //stats.update();
+    //add a spot light to the camera
+
+  slightHelper = new THREE.SpotLightHelper(spotLight, 5); 
+  spotLight.position.set( mouseX, mouseY, 0 ); 
+  camera.add( slightHelper);
+  camera.add( spotLight );
+  camera.position.z += (mouseY - camera.position.y ) * 0.000008;
+  camera.position.x += (mouseX - camera.position.x ) * 0.000007;
+  camera.position.y += (mouseY - camera.position.y ) * -0.000002;
+
+  render();
+
+    } 
+
+
+  function render() {
+  renderer.render( scene, camera); 
+   }
+
+
+  function onWindowResize( event ) {
+        SCREEN_WIDTH = window.innerWidth;
+        SCREEN_HEIGHT = window.innerHeight;
+        renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
+        camera.aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
+        camera.updateProjectionMatrix();
+}
+
+
+  </script>
+
+</body>
+</html>
