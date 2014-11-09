@@ -169,8 +169,8 @@ document.addEventListener( 'mousedown', onDocumentMouseDown, false );
     // window.controls.enabled = true;
     // scene.add( window.controls.getObject() );
 
-    camera.position.set( -33.31772118642715, -5.396255313359101e-15, 81.40970700559271) // 0, 0, 100 );
-    camera.lookAt( 63.586722336019506, 7.269786823776647e-16, 106.09834458657208)
+    camera.position.set( 0, 0, 0) // 0, 0, 100 );
+    camera.lookAt( new THREE.Vector3(63.586722336019506, 7.269786823776647e-16, 106.09834458657208) );
 
     window.controls = new THREE.FirstPersonControls( camera, $('canvas')[0] );
     window.controls.enabled = true
@@ -268,8 +268,8 @@ function animate() {
     // generateGround();
     // window.controls.update();
     // stats.update();
-    render();
     window.controls.update(clock.getDelta())
+    render();
     targetX = mouseX * .001;
     targetY = mouseY * .001;
     
