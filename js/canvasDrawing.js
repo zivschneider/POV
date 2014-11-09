@@ -51,9 +51,7 @@ scene.add( ambientLight );
 
         // CONTROLS
 
-        controlsCamera = new THREE.TrackballControls( camera );
-        controlsCamera.dynamicDampingFactor = 0.25;
-
+        window.controls = new THREE.PointerLockControls( camera );
 
 
       // camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000);
