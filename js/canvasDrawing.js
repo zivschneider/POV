@@ -55,8 +55,8 @@ function init() {  // Sets up the scene.
 
         var material = new THREE.MeshLambertMaterial( {ambient: 0xffffff, color: 0xCCCCCC, specular: 0xCCCCCC, shininess: 0.0} );
       
-// ambientLight2 = new THREE.AmbientLight( 0xFFFFCC );
-// scene.add( ambientLight2 );
+ambientLight2 = new THREE.AmbientLight( 0xFFFFCC );
+scene.add( ambientLight2 );
 
 
         var loader = new THREE.JSONLoader();
