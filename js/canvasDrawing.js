@@ -72,6 +72,9 @@ scene.add( ambientLight2 );
         mesh.castShadow = true;
         mesh.receiveShadow = true;
         mesh.name = "townhouse";
+        mesh.subject = "The Squatter's House";
+        mesh.address = "234 S. Ashland Ave., Chicago, IL";
+        mesh.timeDate = "23 February 2023, 21:25hr";
         mesh.updateMatrix();
         meshObjects.push(mesh);
         console.log(mesh);
@@ -97,6 +100,9 @@ scene.add( ambientLight2 );
         mesh2.castShadow = true;
         mesh2.receiveShadow = true;
         mesh2.name = "police";
+        mesh2.subject = "The Des Plaines Police Station";
+        mesh2.address = "120 N. Des Plaines Ave., Chicago, IL";
+        mesh2.timeDate = "29 October 1893, 01:36hr";
         mesh2.updateMatrix();
         meshObjects.push(mesh2);
         console.log(mesh2);
@@ -121,6 +127,9 @@ scene.add( ambientLight2 );
         mesh3.castShadow = true;
         mesh3.receiveShadow = true;
         mesh3.name = "house";
+        mesh3.subject = "The Mayor's House";
+        mesh3.address = "231 S. Ashland Ave., Chicago, IL";
+        mesh3.timeDate = "28 October 1893, 20:00 hr";
         mesh3.updateMatrix();
         meshObjects.push(mesh3);
         console.log(mesh3);
@@ -173,7 +182,6 @@ document.addEventListener( 'mousedown', onDocumentMouseDown, false );
     window.controls = new THREE.FirstPersonControls( camera, $('canvas')[0] );
     window.controls.enabled = true
     window.controls.lookVertical = false
-
 
 }
 
@@ -235,14 +243,17 @@ function handleMoustEvent(event,action){
     if(currentAction == 'hover'){
 
         // Custom Test Code
-        var message2 = "231 S. Ashland Ave., Chicago, IL";
-        var message3 = "28 October 1893, 20:00 hr";
+        var message2 = "Test";
+        var message3 = "Test2";
         var lineHeight = 30;
         var numberOfLines = 3;
 
 
         context1.clearRect(0,0,640,480);
-        var message = intersects[ 0 ].object.name;
+        //var message = intersects[ 0 ].object.name;
+        var message = intersects[ 0 ].object.subject;
+        var message2 = intersects[ 0 ].object.address;
+        var message3 = intersects[ 0 ].object.timeDate;
         var metrics = context1.measureText(message2);
         var width = metrics.width;
         context1.fillStyle = "rgba(0,0,0,0)"; // black border
