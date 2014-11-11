@@ -1,4 +1,4 @@
-    // Set up the scene, camera, and renderer as global variables.
+  
       var scene, raycaster,ray, vector, camera, renderer, mesh, mesh2, mesh3, mesh4, mesh5, containter, message;
       var particleMaterial;
       var raycaster;
@@ -17,6 +17,8 @@
       var ambientLight, ambientLight2;
       var currentTime = 'past';
 
+      console.log('fooobar')
+
 container = document.createElement('div');
 document.body.appendChild(container);
 
@@ -27,12 +29,15 @@ document.body.appendChild(container);
 
 ///////////////////////////////
 
+
+
 function init() {  // Sets up the scene.
+     var mayorVid = document.getElementById("mayor");
+     var coldestVid = document.getElementById("coldest");
 
       scene = new THREE.Scene();
       var WIDTH = window.innerWidth,
           HEIGHT = window.innerHeight;
-
         raycaster = new THREE.Raycaster();
         projector = new THREE.Projector();
 
@@ -42,9 +47,7 @@ function init() {  // Sets up the scene.
       renderer.setClearColor(0x000000, 1);
       document.body.appendChild(renderer.domElement);
 
-
         camera = new THREE.PerspectiveCamera( 45, WIDTH / HEIGHT, 1, 1200 );
-
 
         window.addEventListener('resize', function() {
         var WIDTH = window.innerWidth,
@@ -52,7 +55,6 @@ function init() {  // Sets up the scene.
         renderer.setSize(WIDTH, HEIGHT);
         camera.aspect = WIDTH / HEIGHT;
         camera.updateProjectionMatrix(); });
-
 
         var material = new THREE.MeshLambertMaterial( {ambient: 0xffffff, color: 0xCCCCCC, specular: 0xCCCCCC, shininess: 0.0} );
 
@@ -86,6 +88,7 @@ scene.add( ambientLight2 );
 
 
 
+// <<<<<<< Updated upstream
      // var material2 = new THREE.MeshLambertMaterial( { ambient: 0xffffff, color: 0xCCCCCC, specular: 0xCCCCCC, shininess: 0.0} );
 
 
@@ -111,6 +114,33 @@ scene.add( ambientLight2 );
      //    meshObjects.push(mesh2);
      //    console.log(mesh2);
      //  })
+// =======
+
+
+     var material2 = new THREE.MeshLambertMaterial( { ambient: 0xffffff, color: 0xCCCCCC, specular: 0xCCCCCC, shininess: 0.0} );
+
+
+        var loader = new THREE.JSONLoader();
+        loader.load( "/models/police.js", function(geometry){
+        mesh2 = new THREE.Mesh(geometry, material2);
+        scene.add(mesh2);
+        mesh2.rotation.y = 0;
+        mesh2.rotation.x = 0;
+        mesh2.position.x = -20;
+        mesh2.position.y = 0;
+        mesh2.position.z = -20;
+        mesh2.scale.set( 5, 5,5 );
+        mesh2.castShadow = true;
+        mesh2.receiveShadow = true;
+        mesh2.name = "police";
+        mesh2.subject = "The Des Plaines Police Station";
+        mesh2.address = "120 N. Des Plaines Ave., Chicago, IL";
+        mesh2.timeDate = "29 October 1893, 01:36hr";
+        mesh2.updateMatrix();
+        meshObjects.push(mesh2);
+        console.log(mesh2);
+      })
+// >>>>>>> Stashed changes
 
 
 
@@ -167,9 +197,9 @@ scene.add( ambientLight2 );
 document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 
-  lighttt = new THREE.SpotLight( 0xffffff,3,100);
-  lighttt.position.set( 0, 40, 0 );
- lighttt.angle = 65;
+lighttt = new THREE.SpotLight( 0xffffff,3,100);
+lighttt.position.set( 0, 40, 0 );
+lighttt.angle = 65;
 
 
        ambientLight = new THREE.AmbientLight( 0xCCCCCC);
@@ -249,19 +279,12 @@ function onDocumentMouseDown( event ) {
   handleMoustEvent(event,'click');
 
 
-
-
-
-     var mayorVid = document.getElementById("coldest");
-     var coldestVid = document.getElementById("mayor");
-
 }
+
 
 function update (){
 
 }
-
-
 
 function onDocumentMouseMove(event) {
   event.preventDefault();
@@ -331,8 +354,10 @@ function handleMoustEvent(event,action){
         context1.fillText(message3, 14, (lineHeight * 3));
         texture1.needsUpdate = true;
       }
+
       else if(currentAction == 'click'){
 
+// <<<<<<< Updated upstream
           intersects[ 0 ].object.material.ambient.setHex(0xFF0000);
 
       var name = intersects[0].object.name;
@@ -351,16 +376,26 @@ function handleMoustEvent(event,action){
         });
        }
 }
+// =======
+      intersects[ 0 ].object.material.ambient.setHex(0xFF0000);
+     
+     var video = document.getElementById(intersects[0].object.name)
+       video.play();
+
+     }
+     // setUpHtml(intersects[ 0 ].object.name);
+
+// >>>>>>> Stashed changes
 
       //   if ( intersects[ 0 ].object.name = mayor ) {
 
       //   }
 
-      //  var mayorVid = document.getElementById("coldest");
-      //  var coldestVid = document.getElementById("mayor");
+       // var mayorVid = document.getElementById("coldest");
+       // var coldestVid = document.getElementById("mayor");
 
-      // }
-    }
+ 
+    // }
 
    projector.unprojectVector( mouse3D2, camera );
    mouse3D2.sub( camera.position);
@@ -381,7 +416,6 @@ function animate() {
     targetX = mouseX * .001;
     targetY = mouseY * .001;
 
-   //animate the light!
 
   lighttt.position.set (0,0,0);
   lighttt.shadowCameraVisible = true;
@@ -389,11 +423,10 @@ function animate() {
   lighttt.target.position.x = (mouseX - lighttt.position.x ) * 0.00019;
   lighttt.target.position.y = (mouseY - lighttt.position.y ) * 0.00019;
 
-  // camera.position.y += (mouseY - camera.position.y ) * -0.00000007;
-
     }
 
 
+// <<<<<<< Updated upstream
     function vidplay() {
 
 
@@ -401,6 +434,8 @@ function animate() {
 }
 
 
+// =======
+// >>>>>>> Stashed changes
 
 function applyColor( geo, h, s, v ) {
 
@@ -410,6 +445,7 @@ function applyColor( geo, h, s, v ) {
 
         }
 }
+
 function render() {
 renderer.render( scene, camera);
 
